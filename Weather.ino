@@ -157,39 +157,7 @@ String GetWeatherForecast() {
   return weatherString;
 }
 
-String WSea_URL = "worldseatemp.com";
-uint8_t SEA_ID = 59;
-String GetSea() {
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("No connection to weather server (No Wi-Fi)");
-    return "";  
-  }  
-  Serial.print("connecting to "); Serial.println(WSea_URL);
-  String wStrURL = String("GET /en/i/") + String(SEA_ID); 
-  wStrURL += "/c/160x86/ HTTP/1.1";
-  wStrURL += "\r\nHost: " + WSea_URL + "\r\nUser-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0\r\nConnection: close\r\n\r\n";
-  Serial.println(wStrURL);  
-  if (ESPclient.connect(WSea_URL.c_str(), 80)) {
-    ESPclient.println(wStrURL);
-  }
-  else {
-    Serial.println("Weather server connection failed");
-    return "";
-  }
-  String response = "";
-  unsigned startTime = millis();
-  delay (200);
-  while (!ESPclient.available() && ((millis()-startTime) < 5000)) {
-        delay (5);
-  }
-  
-  while (ESPclient.available()) { // Get response from server
-     char charIn = ESPclient.read(); // Read a char from the buffer.
-     response += charIn;     // Append the char to the string response.
-  }
-  ESPclient.stop();
-  uint16_t firstInt = response.indexOf("temp\">");
-  uint16_t secondInt = response.indexOf("&deg",firstInt);
-  String tempSea = response.substring(firstInt+6, secondInt);
-  if (tempSea!="") return  String(tempersea[lang] + tempSea +"\xC2С"); else return "";
+
+String GetSea() { //Future Use
+	return "";
 }
