@@ -167,8 +167,6 @@ String GetSea() {
   Serial.print("connecting to "); Serial.println(WSea_URL);
   String wStrURL = String("GET /en/i/") + String(SEA_ID); 
   wStrURL += "/c/160x86/ HTTP/1.1";
-
-  //wStrURL += "\r\nHost: " + WSea_URL + "\r\nUser-Agent: ArduinoWiFi/1.1\r\nConnection: close\r\n\r\n";
   wStrURL += "\r\nHost: " + WSea_URL + "\r\nUser-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0\r\nConnection: close\r\n\r\n";
   Serial.println(wStrURL);  
   if (ESPclient.connect(WSea_URL.c_str(), 80)) {

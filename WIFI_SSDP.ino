@@ -30,7 +30,6 @@ void SSDP_init(void) {
   HTTP.on("/description.xml", HTTP_GET, []() {
     SSDP.schema(HTTP.client());
   });
-  //Если версия  2.0.0 закаментируйте следующую строчку
   SSDP.setDeviceType("upnp:rootdevice");
   SSDP.setSchemaURL("description.xml");
   SSDP.setHTTPPort(80);

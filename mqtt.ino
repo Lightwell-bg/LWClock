@@ -9,7 +9,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   String strTopic = String(topic);
   String strPayload = String((char*)payload);
   Serial.print(strTopic);  Serial.print(" => "); Serial.println(strPayload);
-  if(strTopic == mqtt_sub_crline) {// проверяем из нужного ли нам топика пришли данные 
+  if(strTopic == mqtt_sub_crline) {
     Serial.println(strPayload);
     crLine = strPayload;
   }      

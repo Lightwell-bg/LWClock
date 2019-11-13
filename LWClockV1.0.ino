@@ -57,8 +57,9 @@ float oldnowtime = 111; //****************************
 
 void loop() {
   HTTP.handleClient();
-  if ((millis() < timeCount))  { //При переполнении через 50 дней
+  if ((millis() < timeCount))  { //If use device more than 50 days
     timeCount = millis(); lastTimeWeather = millis(); lastTimeWeatherFcast = millis(); lastNtpTime = millis();
+    ReconnectTime = millis(); mqttDhtTime = millis(); lastTimePHT = millis(); tspeakDhtTime = millis(); timeStopAlarm = millis();
   } 
   if (statusUpdateNtpTime && (millis() - lastNtpTime >= TIME_UPDATE)) { //Update time from NTP
     lastNtpTime = millis();
@@ -71,11 +72,8 @@ void loop() {
     Serial.println("Try sync NTP");
     timeSynch();    
   }
-  if ((millis() < timeCount))  { //if more then 50 days of device work
-    ReconnectTime = millis(); mqttDhtTime = millis(); lastTimePHT = millis(); tspeakDhtTime = millis(); timeStopAlarm = millis();
-  } 
   workAlarms();  
-#if (USE_BME280 == true || USE_DHT == true)
+#if (USE_BME280 == true || USE_DHT == true) //If we have what send to MQTT or TSPEAKE
   if(mqttOn && WiFi.status() == WL_CONNECTED) {
     if (!mqttClient.connected() && (millis() - ReconnectTime > MQTT_CONNECT)) {
       reconnect();
@@ -95,7 +93,7 @@ void loop() {
       Serial.println("Send to TSPEAK");
     }    
   }
-#else
+#else //Use MQTT for get string only
   if(mqttOn && WiFi.status() == WL_CONNECTED) {
     if (!mqttClient.connected() && (millis() - ReconnectTime > MQTT_CONNECT)) {
       reconnect();
@@ -107,7 +105,7 @@ void loop() {
   time_t tn = now();
   float nowtime = hour(tn)+float(minute(tn))/100;
   if (oldnowtime != nowtime) {Serial.println("nowtime: "+ String(nowtime)); oldnowtime = nowtime;} //****************************
-  if (compTimeInt(global_start, global_stop, nowtime)) { 
+  if (compTimeInt(global_start, global_stop, nowtime)) { //Global check the time of display data
     if (modeShow > maxModeShow) modeShow = 1;
     if (oldModeShow != modeShow) {Serial.println("modeShow: "+ String(modeShow)); oldModeShow = modeShow; displayClockCount =millis(); displayClockFirst = true;} //****************************
     uint8_t rnd = random(0, ARRAY_SIZE(catalog));
@@ -128,7 +126,7 @@ void loop() {
       }
     }
     
-    if (modeShow == 2) { //Show creeping line 
+    if (modeShow == 2) { //Show creeping line 1
       float nowtime = hour(tn)+float(minute(tn))/100; 
       //Serial.print("txtFrom0: ");Serial.print(txtFrom0);Serial.print(" nowtime: ");Serial.println(nowtime);
       if (isTxtOn0 && compTimeInt(txtFrom0, txtTo0, nowtime)) {
@@ -155,7 +153,7 @@ void loop() {
       }
     } 
   
-    if (modeShow == 4) { //Show creeping line
+    if (modeShow == 4) { //Show creeping line 2
       float nowtime = hour(tn)+float(minute(tn))/100; 
       //Serial.print("txtFrom[0]: ");Serial.print(txtFrom[0]);Serial.print(" nowtime: ");Serial.println(nowtime);
       if (isTxtOn1 && compTimeInt(txtFrom1, txtTo1, nowtime)) {
@@ -186,7 +184,7 @@ void loop() {
       }    
     }      
     
-    if (modeShow == 6) { //Show creeping line
+    if (modeShow == 6) { //Show creeping line 3
       float nowtime = hour(tn)+float(minute(tn))/100; 
       //Serial.print("txtFrom[0]: ");Serial.print(txtFrom[0]);Serial.print(" nowtime: ");Serial.println(nowtime);
       if (isTxtOn2 && compTimeInt(txtFrom2, txtTo2, nowtime)) {
@@ -202,7 +200,7 @@ void loop() {
         modeShow++;
       }
     } 
-    if (modeShow == 7) { //Show creeping line
+    if (modeShow == 7) { //Show creeping line 4
      float nowtime = hour(tn)+float(minute(tn))/100; 
       //Serial.print("txtFrom[0]: ");Serial.print(txtFrom[0]);Serial.print(" nowtime: ");Serial.println(nowtime);
       if (isTxtOn3 && compTimeInt(txtFrom3, txtTo3, nowtime)) {

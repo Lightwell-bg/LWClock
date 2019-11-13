@@ -3,9 +3,9 @@
 
 const String nName = "LWClock";
 const String nVersion = "v1.0";
-#define USE_RTC false //USE OR NO VERSION
-#define USE_BME280 true //USE OR NO
-#define USE_DHT false //USE OR NO
+#define USE_RTC false //USE RTC chip DS3231 
+#define USE_BME280 false //USE sensor BME280 (5V) http://got.by/40d52x
+#define USE_DHT true //USE sensor DHT
 #define MAX_DEVICES 4  //Number of indicator modules MAX7219
 #include <ESP8266WiFi.h>       
 #include <ESP8266WebServer.h> 
@@ -73,7 +73,7 @@ PubSubClient mqttClient(ESPclient);
   String cVersion = nName + nVersion + urts + " no sensor";  
 #endif //BME280 
 
-#if (USE_BME280 == true || USE_DHT == true)
+#if (USE_BME280 == true || USE_DHT == true) //Show T, H, (P) indoor if have sensor
   const uint8_t maxModeShow = 11; //Number of programs
 #else 
   const uint8_t maxModeShow = 10; //Number of programs
@@ -133,16 +133,16 @@ const char** month_table[] PROGMEM = {month_ru, month_bg, month_en};
 // Wi-Fi setting
 String ssid = "ledlw";
 String password = "";
-String ssidAP = "WiFi-LED";   // SSID AP 
+String ssidAP = "LWClock";   // SSID AP 
 String passwordAP = ""; // AP password
-String SSDP_Name = "LEDLightwell"; // SSDP name
+String SSDP_Name = "LWClock"; // SSDP name
 
 
 String jsonConfig = "{}";
 uint8_t lang = 2; //0-RU, 1-BG, 2 -EN, 3-UA
 unsigned long timeCount = 0; //Time counter for All
-int8_t timezone = 3;               // Time zone GTM
 //Time
+int8_t timezone = 3;               // Time zone GTM
 bool isDayLightSaving = true; //Summer time use
 String sNtpServerName = "us.pool.ntp.org";
 bool statusUpdateNtpTime = 1; //
@@ -161,6 +161,11 @@ float txtFrom0=0, txtFrom1=0, txtFrom2=0, txtFrom3=0;
 float txtTo0=24, txtTo1=24, txtTo2=24, txtTo3=24;
 float weathFrom=0, fcastFrom=0, clockFrom=0, dateFrom=0, seaFrom=0;
 float weathTo=24, fcastTo=24, clockTo=24, dateTo=24, seaTo=24; 
+//Indoor T,H,P
+bool isLedTHP = true; 
+float thpFrom=0, thpTo=24; 
+String strTHP; //String temp, hum, press
+
 uint8_t modeShow = 1; //Mode of display 1 - clock, 2 - date, 3 - run text etc
 
 //Setup for LED
@@ -173,7 +178,7 @@ float global_start = 0, global_stop = 24; //Working time
 
 // Weather server setting
 String  W_URL  = "api.openweathermap.org";
-String  W_API    = "3527b31fcfc28604386f2f2079e67ac5"; 
+String  W_API    = "****************************"; 
 String  CITY_ID     = "732770"; // Other city code http://bulk.openweathermap.org/sample/city.list.json.gz
 String strWeather, strWeatherFcast, strSea; //strSea - for future use
 const unsigned long PER_GET_WEATHER = 1000*60*6;
@@ -196,17 +201,10 @@ const char* forecast[] PROGMEM = {"Завтра  ", "Утре ", "Tomorrow "};
 const char* tempermin[] PROGMEM = {". \xC5.мин ", ". \xC5.мин ", ". \xC5.min "};
 const char* tempermax[] PROGMEM = {"\xC2С макс ", "\xC2С макс ", "\xC2С max "};
 const char* tempersea[] PROGMEM = {"Темп.моря ", "Морската вода ", "Sea temp "};
-
-bool mqttOn = false;
-char mqttData[80]; //array for send to  MQTT
-String mqtt_server = "m24.cloudmqtt.com"; // Name of MQTT server
-int mqtt_port = 16728; //  MQTT port
-String mqtt_user = "fnncrtrr"; // MQTT login
-String mqtt_pass = ""; // MQTT pass
-String mqtt_name = "iClockLW";
-String mqtt_sub_crline = "iClockLW/crLine"; //Topic for subcribe to creeping line
-String crLine = "";
-unsigned long ReconnectTime = 0;  const unsigned long MQTT_CONNECT = 1000*60*3;
+const char* onboard[] PROGMEM = {"На борту темп ", "На борда темп ", "Onboard air "};
+const char* temperIn[] PROGMEM = {"Темп", "Темп ", "Temp"};
+const char* humIn[] PROGMEM = {"Влаж", "Влаж", "Hum"};
+const char* presIn[] PROGMEM = {"Давл", "Нал", "Pres"};  
 
 //alarm
 const uint8_t day_byte[] = {1, 2, 4, 8, 16, 32, 64}; //1 - Sunday, 2 - Monday .... etc.
@@ -218,25 +216,30 @@ typedef struct {
 sAlarmSet myAlarm[] = {{6,30,0},{7,30,0}};
 bool stopAlarm = false; //Alarm of flag (Флаг кнопки выкл. ALARM)
 unsigned long timeStopAlarm = 0; //Отсчет времени активности кнопки (1 мин)  
+
 //mqtt
-float thpFrom=0, thpTo=24; 
-bool isLedTHP = true;
-String strTHP; //String temp, hum, press
-String mqtt_pub_temp = "iClockLW/temp"; 
-String mqtt_pub_hum = "iClockLW/hum";
-String mqtt_pub_press = "iClockLW/press";
+bool mqttOn = false;
+char mqttData[80]; //array for send to  MQTT
+String mqtt_server = "m24.cloudmqtt.com"; // Name of MQTT server
+int mqtt_port = 16728; //  MQTT port
+String mqtt_user = "fnncrtrr"; // MQTT login
+String mqtt_pass = ""; // MQTT pass
+String mqtt_name = "LWClock";
+String mqtt_sub_crline = "LWClock/crLine"; //Topic for subcribe to creeping line
+String crLine = "";
+unsigned long ReconnectTime = 0;  const unsigned long MQTT_CONNECT = 1000*60*3;
+String mqtt_pub_temp = "LWClock/temp"; 
+String mqtt_pub_hum = "LWClock/hum";
+String mqtt_pub_press = "LWClock/press";
 unsigned long mqttDhtTime = 0;  const unsigned long MQTT_SEND_INT = 1000*60*7; //MQTT send interval
 unsigned long lastTimePHT = 0; const unsigned long PER_GET_THP = 1000*60*3; //get sensor data Period 
-const char* onboard[] PROGMEM = {"На борту темп ", "На борда темп ", "Onboard air "};
+
 //thingspeak.com
 unsigned long tspeakDhtTime = 0;  const unsigned long TSPEAK_SEND_INT = 1000*60*10; //TSPEAK send interval
 bool tspeakOn = false;
 String tspeak_server = "api.thingspeak.com";
 unsigned long tspeak_channal = 111111;
 String tspeak_wapi = "HMW4HF3BRC7OIGSO";  
-const char* temperIn[] PROGMEM = {"Темп", "Темп ", "Temp"};
-const char* humIn[] PROGMEM = {"Влаж", "Влаж", "Hum"};
-const char* presIn[] PROGMEM = {"Давл", "Нал", "Pres"};  
 
 //predefine functions
 String GetTime(bool s=false); //s - показывать секунды
