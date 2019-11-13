@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <meta http-equiv = "Content-type" content = "text/html; charset=utf-8">
+        <title>Led screen ver:2.0</title>
+        <link rel="icon" href="./img/favicon.png" type="images/png">
+        <link rel = "stylesheet" type = "text/css" href = "/style.css">
+        <script type = "text/javascript" src = "/function.js"></script>
+        <script type = "text/javascript" src = "/lang_RU.js"></script>
+        <script type = "text/javascript" src = "/lang_BG.js"></script>
+        <script type = "text/javascript" src = "/lang_EN.js"></script>
+        <script type = "text/javascript">
+            function set_mqtt_ust(submit) {
+                server = "/mqttSet?mqttOn=" + val_sw('mqttOn') + "&mqtt_server=" + val('mqtt_server') + "&mqtt_port=" + (val('mqtt_port')) + "&mqtt_user=" + (val('mqtt_user')) + "&mqtt_pass=" + (val('mqtt_pass'));
+                server += "&mqtt_name=" + val('mqtt_name') + "&mqtt_sub_crline=" + val('mqtt_sub_crline') + "&mqtt_pub_temp=" + val('mqtt_pub_temp') + "&mqtt_pub_hum=" + val('mqtt_pub_hum') + "&mqtt_pub_press=" + val('mqtt_pub_press');
+                send_request(submit,server);
+				alert("Ok");
+            }
+            function set_mqtt_on(submit) {
+                server = "/mqttOn?mqttOn=" + val_sw("mqttOn");
+                send_request(submit, server);
+				alert("Ok");
+            }
+            function get_sensor(submit) {
+                server = "/Sensor";
+                send_request(submit,server);
+				window.location.reload();
+				//load();
+				alert("Ok");
+            }	
+            function set_tspeak_ust(submit) {
+                server = "/tspeakSet?tspeakOn=" + val_sw('tspeakOn') + "&tspeak_server=" + val('tspeak_server');
+                server += "&tspeak_channal=" + val('tspeak_channal') + "&tspeak_wapi=" + val('tspeak_wapi');
+                send_request(submit,server);
+				alert("Ok");
+            }
+            function set_tspeak_on(submit) {
+                server = "/tspeakOn?tspeakOn=" + val_sw("tspeakOn");
+                send_request(submit, server);
+				alert("Ok");
+            }			
+        </script>
+    </head>
+    <body onload = "load();">
+        <header>
+            <span class="opt_cn" id="header"></span><br>
+            <span class="opt_cn" id="P_time_informer"></span>
+            <span id="time">{{time}}</span><br>
+			<span id="thp">Temp {{temp_now}}°C Hum {{hum_now}}%</span>
+        </header>       
+        <central-unit>
+            <div class="menu_unit">
+                <a class="link__img" href="/index.html"><span class="ico__text">Screen</span></a>			
+                <a class="link__img" href="/wifi.html"><span class="ico__text">Wifi</span></a>
+                <a class="link__img" href="/time.html"><span class="ico__text">Time</span></a>
+                <a class="link__img" href="/setup.html"><span class="ico__text">Setup</span></a>
+                <a class="link__img" href="/help.html"><span class="ico__text">Help</span></a>
+                <a class="link__img" href="#"><span class="ico__text" onclick="restart(this,'ResetESP?');">Restart</span></a>
+            </div>
+            <titles>
+                <span class="opt_cn" id="P_mqtt_title"></span>
+            </titles>
+            <div class="informer">
+                <span class="opt_cn" id="P_mqtt_informer"></span>
+                <a href="https://www.cloudmqtt.com" align="center" target="_blank"> cloudmqtt.com</a>
+            </div>            
+            <div id="main_unit">
+                <hr>
+                <label class="switch">
+                    <span class="opt_cn" id="P_mqtt_mqttOn"></span>
+                    <input type="checkbox" class="checkbox" id="mqttOn" name="switch-btn" onclick="set_mqtt_on(this);">
+                    <span class="switch-btn"></span>
+                </label>
+                <hr>
+                <paragraph><span class="opt_cn" id="P_mqtt_set"></span></paragraph>
+                <center>
+                <table>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_server"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_server" value="{{mqtt_server}}" pattern="[- 0-9a-zA-Z._/]{1,20}"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_port"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_port" value="{{mqtt_port}}" pattern="[\d]{5}"><br>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_user"></span></td>
+                        <td><input class="field form-control" id="mqtt_user" value="{{mqtt_user}}" pattern="[-\w\s#@/]{0,20}" onfocus="this.type='text'" type="password"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_pass"></span></td>
+                        <td><input class="field form-control" id="mqtt_pass" value="{{mqtt_pass}}" pattern="[-\w\s#@/]{0,20}" onfocus="this.type='text'" type="password"></td>
+                    </tr>
+                </table>
+                </center>  
+                <paragraph><span class="opt_cn" id="P_mqtt_setESP"></span></paragraph>
+                <center>
+                <table>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_name"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_name" value="{{mqtt_name}}" pattern="[-\w\s#@/]{1,24}"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_sub_inform"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_sub_crline" value="{{mqtt_sub_crline}}" pattern="[-\w\s#@/]{1,24}"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_pub_temp"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_pub_temp" value="{{mqtt_pub_temp}}" pattern="[-\w\s#@/]{1,24}"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_pub_hum"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_pub_hum" value="{{mqtt_pub_hum}}" pattern="[-\w\s#@/]{1,24}"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_mqtt_pub_press"></span></td>
+                        <td><input type="text" class="field form-control" id="mqtt_pub_press" value="{{mqtt_pub_press}}" pattern="[-\w\s#@/]{1,24}"></td>
+                    </tr>
+                </table>
+                </center>
+                <span class="save_booton" id="save" onclick="set_mqtt_ust(this);"></span><br>
+				<span class="save_booton" id="P_get_sensor" onclick="get_sensor(this);"></span>
+				<paragraph>
+					<span class="opt_cn" id="P_tspeak_title"></span>
+				</paragraph>
+				<div class="informer">
+					<span class="opt_cn" id="P_tspeak_informer"></span>
+					<a href="https://thingspeak.com" align="center" target="_blank"> thingspeak.com</a>
+				</div>  
+
+                <hr>
+                <label class="switch">
+                    <span class="opt_cn" id="P_tspeak_mqttOn"></span>
+                    <input type="checkbox" class="checkbox" id="tspeakOn" name="switch-btn" onclick="set_tspeak_on(this);">
+                    <span class="switch-btn"></span>
+                </label>
+                <hr>
+                <center>
+                <table>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_tspeak_server"></span></td>
+                        <td><input type="text" class="field form-control" id="tspeak_server" value="{{tspeak_server}}" pattern="[- 0-9a-zA-Z._/]{1,20}"></td>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_tspeak_channal"></span></td>
+                        <td><input type="text" class="field form-control" id="tspeak_channal" value="{{tspeak_channal}}" pattern="[\d]{6}"><br>
+                    </tr>
+                    <tr>
+                        <td align = "right"><span class="opt_cn" id="P_tspeak_wapi"></span></td>
+                        <td><input class="field form-control" id="tspeak_wapi" value="{{tspeak_wapi}}" pattern="[-\w\s#@/]{0,20}" onfocus="this.type='text'" type="password"></td>
+                    </tr>
+                </table>
+                </center> 
+				<span class="save_booton" id="save1" onclick="set_tspeak_ust(this);"></span><br>				
+				
+            </div>			
+            <div class="menu_unit" id="langs">
+                <a><span class="ico__text" onclick="set_lang_f(this, 'EN');">EN</span></a>			
+                <a><span class="ico__text" onclick="set_lang_f(this, 'RU');">RU</span></a>
+                <a><span class="ico__text" onclick="set_lang_f(this, 'BG');">BG</span></a>
+            </div>
+        </central-unit>
+    </body>           
+</html>

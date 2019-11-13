@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <meta http-equiv = "Content-type" content = "text/html; charset=utf-8">
+        <title>Led screen ver:2.0</title>
+        <link rel="icon" href="./img/favicon.png" type="images/png">
+        <link rel = "stylesheet" type = "text/css" href = "/style.css">
+        <script type = "text/javascript" src = "/function.js"></script>
+        <script type = "text/javascript" src = "/lang_RU.js"></script>
+		<script type = "text/javascript" src = "/lang_BG.js"></script>
+		<script type = "text/javascript" src = "/lang_EN.js"></script>
+        <script type = "text/javascript">
+            function set_led(submit) {
+                //server = "/ledsetup?speed_d="+val('speed_d') + "&bright=" + val('bright');
+				server = "/ledsetup?speed_d="+val('speed_d') + "&brightd=" + val('brightd') + "&brightn=" + val('brightn');
+				server += "&dmodefrom=" + val('dmodefrom') + "&dmodeto=" + val('dmodeto') + "&fontUsed=" + val('fontUsed');
+                send_request(submit,server);
+				alert("Ok");
+            }		
+            function set_weather(submit) {
+                server = "/weather?w_api=" + val('w_api') + "&weatherHost=" + val('weatherHost') + "&city_code=" + val('city_code');
+                send_request(submit, server);
+				alert("Ok");
+            }
+            function set_weather_up(submit) {
+                server = "/weatherUpdate?update=ok";
+                send_request(submit, server);
+				alert("Ok");
+            }
+        </script>
+    </head>
+    <body onload = "load();">
+        <header>
+            <span class="opt_cn" id="header"></span><br>
+            <span class="opt_cn" id="P_time_informer"></span>
+            <span id="time">{{time}}</span> 
+        </header>       
+        <central-unit>
+            <div class="menu_unit">
+                <a class="link__img" href="/index.html"><span class="ico__text">Screen</span></a>			
+                <a class="link__img" href="/wifi.html"><span class="ico__text">Wifi</span></a>
+                <a class="link__img" href="/time.html"><span class="ico__text">Time</span></a>
+                <a class="link__img" href="/setup.html"><span class="ico__text">Setup</span></a>
+				<a class="link__img" href="/mqtt.html"><span class="ico__text">MQTT</span></a>
+                <a class="link__img" href="/help.html"><span class="ico__text">Help</span></a>
+                <a class="link__img" href="#"><span class="ico__text" onclick="restart(this,'ResetESP?');">Restart</span></a>
+            </div>
+            <titles>
+                <span class="opt_cn" id="P_setup_title"></span>
+            </titles>
+            <div id="main_unit">
+                <center>
+                    <table>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_setup_speed"></span></td>
+                            <td colspan=3><input id="speed_d" type="range" value="{{speed_d}}" min="3" max="25"></td>
+                        </tr>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_setup_dmfrom"></span></td>
+                            <td><select id = "dmodefrom">
+                                <option value = "0"> 0 </option>
+                                <option value = "1"> 1 </option>
+                                <option value = "2"> 2 </option>
+                                <option value = "3"> 3 </option>
+                                <option value = "4"> 4 </option>
+                                <option value = "5"> 5 </option>
+                                <option value = "6"> 6 </option>
+                                <option value = "7"> 7 </option>
+                                <option value = "8"> 8 </option>
+                                <option value = "9"> 9 </option>
+                                <option value = "10"> 10 </option>
+                                <option value = "11"> 11 </option>
+                                <option value = "12"> 12 </option>
+                                <option value = "13"> 13 </option>
+                                <option value = "14"> 14 </option>
+                                <option value = "15"> 15 </option>
+                                <option value = "16"> 16 </option>
+                                <option value = "17"> 17 </option>
+                                <option value = "18"> 18 </option>
+                                <option value = "19"> 19 </option>
+                                <option value = "20"> 20 </option>
+                                <option value = "21"> 21 </option>
+                                <option value = "22"> 22 </option>
+                                <option value = "23"> 23 </option>
+                            </select></td>
+                            <td align = "right"><span class="opt_cn" id="P_setup_dmto"></span></td>
+                            <td><select id = "dmodeto">
+                                <option value = "1"> 1 </option>
+                                <option value = "2"> 2 </option>
+                                <option value = "3"> 3 </option>
+                                <option value = "4"> 4 </option>
+                                <option value = "5"> 5 </option>
+                                <option value = "6"> 6 </option>
+                                <option value = "7"> 7 </option>
+                                <option value = "8"> 8 </option>
+                                <option value = "9"> 9 </option>
+                                <option value = "10"> 10 </option>
+                                <option value = "11"> 11 </option>
+                                <option value = "12"> 12 </option>
+                                <option value = "13"> 13 </option>
+                                <option value = "14"> 14 </option>
+                                <option value = "15"> 15 </option>
+                                <option value = "16"> 16 </option>
+                                <option value = "17"> 17 </option>
+                                <option value = "18"> 18 </option>
+                                <option value = "19"> 19 </option>
+                                <option value = "20"> 20 </option>
+                                <option value = "21"> 21 </option>
+                                <option value = "22"> 22 </option>
+                                <option value = "23"> 23 </option>
+                                <option value = "24"> 24 </option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_setup_brightday"></span></td>
+                            <td><select id = "brightd">
+                                <option value = "0"> 0 </option>
+                                <option value = "1"> 1 </option>
+                                <option value = "2"> 2 </option>
+                                <option value = "3"> 3 </option>
+                                <option value = "4"> 4 </option>
+                                <option value = "5"> 5 </option>
+                                <option value = "6"> 6 </option>
+                                <option value = "7"> 7 </option>
+                                <option value = "8"> 8 </option>
+                                <option value = "9"> 9 </option>
+                                <option value = "10"> 10 </option>
+                                <option value = "11"> 11 </option>
+                                <option value = "12"> 12 </option>
+                                <option value = "13"> 13 </option>
+                                <option value = "14"> 14 </option>
+                                <option value = "15"> 15 </option>
+                            </select></td>
+                            <td align = "right"><span class="opt_cn" id="P_setup_brightnight"></span></td>
+                            <td><select id = "brightn">
+                                <option value = "0"> 0 </option>
+                                <option value = "1"> 1 </option>
+                                <option value = "2"> 2 </option>
+                                <option value = "3"> 3 </option>
+                                <option value = "4"> 4 </option>
+                                <option value = "5"> 5 </option>
+                                <option value = "6"> 6 </option>
+                                <option value = "7"> 7 </option>
+                                <option value = "8"> 8 </option>
+                                <option value = "9"> 9 </option>
+                                <option value = "10"> 10 </option>
+                                <option value = "11"> 11 </option>
+                                <option value = "12"> 12 </option>
+                                <option value = "13"> 13 </option>
+                                <option value = "14"> 14 </option>
+                                <option value = "15"> 15 </option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                    </table>
+                    <label class="switch"><span class="opt_cn" id="P_setup_vba"></span>
+                        <input type="checkbox" id="vba">
+                        <span class="switch-btn"></span>
+                    </label><br><br>
+					<span class="opt_cn" id="P_setup_font"></span>
+					<select id = "fontUsed">
+						<option value="0">6bite_rus</option>
+						<option value="1">5bite_rus</option>
+						<option value="2">font_rus</option>
+					</select>
+					<br>				
+					<span class="save_booton" id="save" onclick="set_led(this);"></span>
+					<br><br>								
+                </center>
+				
+            <titles>
+                <span class="opt_cn" id="P_weather_title"></span>
+            </titles>
+            <div class="informer">
+                <span class="opt_cn" id="P_weather_informer"></span>
+                <a href = "http://openweathermap.org/api" align = "center" target = "_blank" id="P_weather_linkAPI"></a> 
+                <a href = "https://led-lightwell.eu/city_list.txt" align = "center" target = "_blank" id="P_weather_linkID"></a>
+            </div>
+            <div id="main_unit">
+                <center>
+                    <table>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_weather_server"></span></td>
+                            <td><input type="text" class="field" id="weatherHost" value="{{weatherHost}}" class="form-control" pattern="[0-9a-zA-Z.]{1,32}"></td>
+                        </tr>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_weather_key"></span></td>
+                            <td><input type="text" class="field" id="w_api" value="{{w_api}}" class="form-control" pattern="[0-9a-zA-Z.]{1,32}"></td>
+                        </tr>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_weather_ID"></span></td>
+                            <td><input type="text" class="field" id="city_code" value="{{city_code}}" class="form-control" pattern="[0-9]{1,10}"></td>
+                        </tr>
+                    </table>
+                </center>
+                <!--<center>
+                    <label class="switch"><span class="opt_cn" id="P_weather_outForecast"></span>
+                        <input type="checkbox" id="outForecast">
+                        <span class="switch-btn"></span>
+                    </label>
+                </center>-->				
+                <span class="save_booton" id="save1" onclick="set_weather(this);"></span>
+                <br>
+                <span class="save_booton" id="P_weather_update" onclick="set_weather_up(this);"></span>				
+				
+            </div>
+            <div class="menu_unit" id="langs">
+                <a><span class="ico__text" onclick="set_lang_f(this, 'EN');">EN</span></a>			
+                <a><span class="ico__text" onclick="set_lang_f(this, 'RU');">RU</span></a>
+                <a><span class="ico__text" onclick="set_lang_f(this, 'BG');">BG</span></a>
+            </div>
+        </central-unit>
+    </body>
+</html>
