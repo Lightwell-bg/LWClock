@@ -109,7 +109,9 @@ Starting with LW-Clock editing the Config.h file is optional. SSID and password 
 
 Open Weather Map free API key: http://openweathermap.org/  -- this is used to get weather data.
 LW-Clock version 1.0 supports 4 and more Dot Matrix Module MAX7219-- configure in the config.h file.
+
 **NOTE!!! If you use more than 4 modules you must connect an external power supply with a capacity of 330 mA per each 8x8 module!**
+
 NOTE: The settings in the Config.h are the default settings for the first loading. After loading you can change the settings via the Web Interface. If you want to change settings again in the Config.h, you will need to erase the file system on the Wemos or use the “Reset Settings” option in the Web Interface.
 During the first time run, Wemos D1 mini will try to connect to your Wi-Fi and fail (because it doesn't have any previously saved Wi-Fi credentials). This will cause it to start up an access point, which serves up a captive configuration portal.
 You can connect to this access point to select and enter credentials for your network. Save configuration and restart device. (Wemos  D1 mini will restart and connect to your Wi-Fi network)
