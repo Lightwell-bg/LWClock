@@ -104,7 +104,7 @@ var langEN = {
     restart:"Back to factory settings",
     //-- mqtt
     P_mqtt_title:"Configure MQTT",
-	P_mqtt_informer:"Configure the MQTT server. You can use an external server, for example:",
+	P_mqtt_informer:"Configure the MQTT server. You can use an external server, for example: ",
     P_mqtt_mqttOn:"Use MQTT server",
 	P_mqtt_set:"Connection to MQTT server:",
     P_mqtt_server:"MQTT server address",
@@ -113,10 +113,10 @@ var langEN = {
 	P_mqtt_pass:"Server User Password",
     P_mqtt_setESP:"Configuring ESP",
 	P_mqtt_name:"Device name (ESP)",
-	P_mqtt_sub_inform:"Topic of inform message",
-    P_mqtt_pub_temp:"Topic of publication of temperature",
-    P_mqtt_pub_hum:"Topic of humidity publication",
-	P_mqtt_pub_press:"Press Release Topic",
+	P_mqtt_sub_inform:"Topic for inform message",
+    P_mqtt_pub_temp:"Temperature publication",
+    P_mqtt_pub_hum:"Humidity publication",
+	P_mqtt_pub_press:"Pressure publication",
 	P_get_sensor:"Update data from sensors",
 		//----thingspeak
 	P_tspeak_title:"Configure transmit data to external server",	
