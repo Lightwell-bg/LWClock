@@ -130,7 +130,9 @@ You can order both assembling clock kit and finished case, ready for coloring or
 Third variant is made of filaments for 3D-printers (ABS, PETG, PLA etc.). You can make it yourself using a 3D printer and blueprints.
 ### Enclosure 3D Model
 https://a360.co/2XeQH2o
+
 https://a360.co/2HCSG9u
+
 https://a360.co/33tJY6v
 
 You can download plywood and acryl blueprints for CNC laser platemaker here https://github.com/Lightwell-bg/LWClock-cases
