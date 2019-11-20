@@ -39,7 +39,7 @@ Clock adjustment and manipulation is performed via WEB-interface. Micro-USB conn
 
 Note: Using the links provided here help to support these types of projects. Thank you for the support.
 
-**You can purchase a PCB with soldered elements and connectors for connecting the indicator and sensors, or just a PCB and a set of elements for installation. https://diy.led-lightwell.eu/product/lw-multifunctional-clock-kit/
+**You can purchase a PCB with soldered elements and connectors for connecting the indicator and sensors, or just a PCB and a set of elements for installation ** https://diy.led-lightwell.eu/product/lw-multifunctional-clock-kit/
 
 ## Schematics / Assembly
 | Component  | Pins  |  Wemos D1 Mini |
@@ -142,7 +142,7 @@ You can download plywood and acryl blueprints for CNC laser platemaker here http
 
 3D Printed Case https://www.thingiverse.com/thing
 
-**You can purchase plywood and acryl enclosure cases here.
+**You can purchase plywood and acryl enclosure cases here:**
 
 https://diy.led-lightwell.eu/product/diy-plywood-enclosure-case-for-lw-clock/
 
