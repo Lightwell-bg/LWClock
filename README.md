@@ -125,6 +125,13 @@ All clock management is carried out using a web browser.  On first power-up, LW-
 
 For Wi-Fi network connection please input its SSID and password.  After successful connection LW-Clock will begin to receive and transmit information over the Internet. NTP servers are used to get accurate time. To get the current weather and forecast use the service https://openweathermap.org (you need to register and get an API key). To transmit temperature, humidity and barometric pressure data you can use the MQTT server https://www.cloudmqtt.com/ and the server https://thingspeak.com. You can also transmit information for display on the clock in the form of a creeping line through the MQTT server.
 
+![](https://github.com/Lightwell-bg/LWClock/blob/master/images/web-int-01.png)
+![](https://github.com/Lightwell-bg/LWClock/blob/master/images/web-int-02.png)
+![](https://github.com/Lightwell-bg/LWClock/blob/master/images/web-int-03.png)
+![](https://github.com/Lightwell-bg/LWClock/blob/master/images/web-int-04.png)
+![](https://github.com/Lightwell-bg/LWClock/blob/master/images/web-int-05.png)
+![](https://github.com/Lightwell-bg/LWClock/blob/master/images/web-int-06.png)
+
 ## Three types of case material 
 We designed three types of the clock case, which you can choose to give a device a complete and stylish look.
 First variant is made of black polished acryl, which fits perfectly into modern apartment or office.
