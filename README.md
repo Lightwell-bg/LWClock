@@ -36,6 +36,7 @@ Clock adjustment and manipulation is performed via WEB-interface. Micro-USB conn
 - Active Buzzer http://got.by/42k1sg
 - Micro USB Cable: http://got.by/40dbf7 
 - Vinyl Smoke Film Sheet http://got.by/43vkl6
+
 Note: Using the links provided here help to support these types of projects. Thank you for the support.
 **You can purchase a PCB with soldered elements and connectors for connecting the indicator and sensors, or just a PCB and a set of elements for installation. https://diy.led-lightwell.eu/product/lw-multifunctional-clock-kit/
 
