@@ -67,6 +67,8 @@ Note: Using the links provided here help to support these types of projects. Tha
 |**UART**|Tx|TX (GPIO1)|
 ||Rx|RX (GPIO3)|
 
+[![](https://github.com/Lightwell-bg/LWClock/blob/master/images/Board-sm.png)](https://github.com/Lightwell-bg/LWClock/blob/master/images/Board.png)
+
 1. Solder the elements on the printed circuit board according to the circuit diagram, instructions and markings placed on the printed circuit board.
 2. Connect the Matrix MAX7219 indicator modules, BME280, Buzzer and TTP223B digital touch capacitive sensor using soldering or connectors.
 3. Fasten the circuit board to the back of the Matrix MAX7219 LED Display Modules using M3 screws and plastic washers.
