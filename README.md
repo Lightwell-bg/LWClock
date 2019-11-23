@@ -12,7 +12,7 @@ Clock adjustment and manipulation is performed via WEB-interface. Micro-USB conn
 - Always precise time because of synchronization with NTP time servers
 - High display brightness 
 - Indoor temperature, humidity and barometric pressure measurement
-- Sending temperature, humidity and barometric pressure data to MQTT server
+- Sending temperature, humidity and barometric pressure data to MQTT and Thingspeak.com server
 - Getting a weather information and forecast for your city (temperature, barometric pressure, humidity, cloud and wind structure) 
 - Output of any predetermined information in the form of a creeping line
 - Remote transmission of any text messages via MQTT server and it’s output on the clock
@@ -39,7 +39,8 @@ Clock adjustment and manipulation is performed via WEB-interface. Micro-USB conn
 
 Note: Using the links provided here help to support these types of projects. Thank you for the support.
 
-**You can purchase a PCB with soldered elements and connectors for connecting the indicator and sensors, or just a PCB and a set of elements for installation ** https://diy.led-lightwell.eu/product/lw-multifunctional-clock-kit/
+**You can purchase a PCB with soldered elements and connectors for connecting the indicator and sensors, or just a PCB and a set of elements for installation**
+https://diy.led-lightwell.eu/product/lw-multifunctional-clock-kit/
 
 ## Schematics / Assembly
 | Component  | Pins  |  Wemos D1 Mini |
@@ -156,3 +157,5 @@ You can download plywood and acryl blueprints for CNC laser platemaker here http
 https://diy.led-lightwell.eu/product/diy-plywood-enclosure-case-for-lw-clock/
 
 https://diy.led-lightwell.eu/product/diy-black-polished-acryl-enclosure-case-for-lw-clock/
+
+**Link to YouTube** https://youtu.be/VDfjap1s_JY
