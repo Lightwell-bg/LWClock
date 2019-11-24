@@ -150,7 +150,7 @@ https://a360.co/33tJY6v
 
 You can download plywood and acryl blueprints for CNC laser platemaker here https://github.com/Lightwell-bg/LWClock-cases
 
-3D Printed Case https://www.thingiverse.com/thing
+3D Printed Case https://www.thingiverse.com/thing:3987202
 
 **You can purchase plywood and acryl enclosure cases here:**
 
