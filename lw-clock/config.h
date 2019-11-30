@@ -3,9 +3,9 @@
 
 const String nName = "LWClock";
 const String nVersion = "v1.0";
-#define USE_RTC false //USE RTC chip DS3231 
-#define USE_BME280 false //USE sensor BME280 (5V) http://got.by/40d52x
-#define USE_DHT true //USE sensor DHT
+#define USE_RTC true //USE RTC chip DS3231 
+#define USE_BME280 true //USE sensor BME280 (5V) http://got.by/40d52x
+#define USE_DHT false //USE sensor DHT
 #define MAX_DEVICES 4  //Number of indicator modules MAX7219
 #include <ESP8266WiFi.h>       
 #include <ESP8266WebServer.h> 
@@ -205,6 +205,10 @@ const char* onboard[] PROGMEM = {"На борту темп ", "На борда �
 const char* temperIn[] PROGMEM = {"Темп", "Темп ", "Temp"};
 const char* humIn[] PROGMEM = {"Влаж", "Влаж", "Hum"};
 const char* presIn[] PROGMEM = {"Давл", "Нал", "Pres"};  
+
+//sea
+String WSea_URL = "worldseatemp.com";
+String SEA_ID = "59";
 
 //alarm
 const uint8_t day_byte[] = {1, 2, 4, 8, 16, 32, 64}; //1 - Sunday, 2 - Monday .... etc.

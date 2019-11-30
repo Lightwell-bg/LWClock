@@ -59,6 +59,9 @@ var langBG = {
     P_weather_timeScrollStart:"Отображать бегущую строку с:",
     P_weather_timeScrollSpeed:"Скорость бегущей строки",
 	P_weather_update:"Обновяване на прогноза за времето",
+	P_sea_informer:"За получаване температура на морската вода,",
+	P_sea_linkAPI:"тук ще получим код (ID) на град",
+	P_sea_cityID:"Град",		
     //-- setup
     P_setup_title:"Настройки на табло",
 	P_setup_speed:"Скоростта на текста",

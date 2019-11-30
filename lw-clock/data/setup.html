@@ -23,6 +23,11 @@
                 send_request(submit, server);
 				alert("Ok");
             }
+            function set_sea(submit) {
+                server = "/sea?seacity_id=" + val('sea_id');
+                send_request(submit, server);
+				alert("Ok");
+            }			
             function set_weather_up(submit) {
                 server = "/weatherUpdate?update=ok";
                 send_request(submit, server);
@@ -205,6 +210,55 @@
                 <span class="save_booton" id="P_weather_update" onclick="set_weather_up(this);"></span>				
 				
             </div>
+<!-- SEA informer-->			
+            <div class="informer">
+                <span class="opt_cn" id="P_sea_informer"></span>
+                <a href = "http://worldseatemp.com/en/informer/" align = "center" target = "_blank" id="P_sea_linkAPI"></a> 
+            </div>
+            <div id="main_unit">
+                <center>
+                    <table>
+                        <tr>
+                            <td align = "right"><span class="opt_cn" id="P_sea_cityID"></span></td>
+                            <td align = "right">
+								<select id = "sea_id">
+									<option value="55">Balchik</option>
+									<option value="57">St. Constantine and Helena</option>
+									<option value="58">Elenite</option>
+									<option value="59">Sveti Vlas</option>
+									<option value="61">Nesebar</option>
+									<option value="62">Golden Sands</option>
+									<option value="63">Obzor</option>
+									<option value="66">Albena</option>
+									<option value="68">Pomorie</option>
+									<option value="69">Kranevo</option>
+									<option value="70">Tsarevo</option>
+									<option value="71">Burgas</option>
+									<option value="72">Varna</option>
+									<option value="75">Sunny Beach</option>
+									<option value="736">Sozopol</option>
+									<option value="789">Primorsko</option>
+									<option value="921">Rezovo</option>
+									<option value="922">Sinemorets</option>
+									<option value="923">Chernomorets</option>
+									<option value="924">Kraymorie</option>
+									<option value="925">Sarafovo</option>
+									<option value="926">Shkorpilovtsi</option>
+									<option value="927">Kavarna</option>
+									<option value="928">Ravda</option>
+									<option value="929">Lovenets</option>
+									<option value="930">Dyuni</option>
+									<option value="931">Kiten</option>
+									<option value="932">Byala</option>
+									<option value="933">Ahtopol</option>
+								</select>
+							</td>
+                        </tr>
+                    </table>
+                </center>
+                <span class="save_booton" id="save2" onclick="set_sea(this);"></span>
+            </div>			
+<!-- end SEA informer-->			
             <div class="menu_unit" id="langs">
                 <a><span class="ico__text" onclick="set_lang_f(this, 'EN');">EN</span></a>			
                 <a><span class="ico__text" onclick="set_lang_f(this, 'RU');">RU</span></a>

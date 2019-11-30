@@ -59,6 +59,9 @@ var langEN = {
     P_weather_timeScrollStart:"Display a running line, with:",
     P_weather_timeScrollSpeed:"Treadmill speed",
 	P_weather_update:"Update weather forecast",
+	P_sea_informer:"To obtain the Sea temperature,",
+	P_sea_linkAPI:"here we take the city ID",
+	P_sea_cityID:"City",
     //-- setup
     P_setup_title:"Settings screen",
 	P_setup_speed:"Speed of creeping line",

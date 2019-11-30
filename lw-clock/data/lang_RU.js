@@ -59,6 +59,9 @@ var langRU = {
     P_weather_timeScrollStart:"Отображать бегущую строку с:",
     P_weather_timeScrollSpeed:"Скорость бегущей строки",
 	P_weather_update:"Обновить прогноз погоды",
+	P_sea_informer:"Для получения температуры морской воды,",
+	P_sea_linkAPI:"здесь берем код (ID) города",
+	P_sea_cityID:"Город",	
     //-- setup
     P_setup_title:"Настройки устройства",
 	P_setup_speed:"Скорость бегущей строки",

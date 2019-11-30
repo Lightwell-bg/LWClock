@@ -10,7 +10,8 @@ void server_httpinit(void) {
   HTTP.on("/ledsetup", handle_LedSetup); //speed, brightness, 
   HTTP.on("/texts", handle_Texts);     // Set stext
   HTTP.on("/ledoption", handle_LedOption);
-  HTTP.on("/weather", handle_Weather); 
+  HTTP.on("/weather", handle_Weather);
+  HTTP.on("/sea", handle_Sea);  
   HTTP.on("/weatherUpdate", handle_weather_update);
   HTTP.on("/lang", handle_Language);
   HTTP.on("/mqttSet", handle_MQTTSet);
@@ -95,6 +96,7 @@ void handle_ConfigJSON() {
   json["weatherHost"] = W_URL;
   json["city_code"] = CITY_ID;
   json["w_api"] = W_API; 
+  json["sea_id"] = SEA_ID;
   json["ntpserver"] = sNtpServerName;  
   json["mqttOn"]=(mqttOn?"checked":"");
   json["mqtt_server"] = mqtt_server;
@@ -108,11 +110,11 @@ void handle_ConfigJSON() {
   json["mqtt_pub_press"] = mqtt_pub_press;
 #if USE_DHT == true
   json["temp_now"] = getTempDHT();
-  json["hum_now"] = getHumDHT();
+  json["hum_now"] = getHumDHT()+ "%";
 #endif
 #if USE_BME280 == true
   json["temp_now"] = getTempBME280();
-  json["hum_now"] = getHumBME280();
+  json["hum_now"] = getHumBME280() + "%  Press " + getPressBME280() + "mm";
 #endif  
   json["isLedTHP"]=(isLedTHP?"checked":"");
   json["thpFrom"] = thpFrom; json["thpTo"] = thpTo;
@@ -266,7 +268,7 @@ void handle_Weather() {
   saveConfig();                
   strWeather = GetWeather(); delay(1000); strWeatherFcast = GetWeatherForecast();
   Serial.println("W_URL: " + W_URL + ", CITY_ID: " + CITY_ID + ", W_API: " + W_API);
-  HTTP.send(200, "text/plain", "OK"); // отправляем ответ о выполнении
+  HTTP.send(200, "text/plain", "OK"); 
 }
 
 void handle_weather_update() {
@@ -276,6 +278,14 @@ void handle_weather_update() {
     strWeatherFcast = GetWeatherForecast();
     HTTP.send(200, "text/plain", "OK");
   }
+}
+
+void handle_Sea() {
+  SEA_ID = HTTP.arg("seacity_id").c_str(); 
+  saveConfig();                
+  (isLedSea?strSea = GetSea():strSea ="");
+  Serial.println("SEA_ID: " + SEA_ID);
+  HTTP.send(200, "text/plain", "OK"); 
 }
 
 void handle_Language() {               

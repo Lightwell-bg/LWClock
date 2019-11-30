@@ -68,6 +68,7 @@ bool loadConfig() {
     CITY_ID = root["city_code"].as<String>();
     W_URL = root["weatherHost"].as<String>();
     W_API = root["w_api"].as<String>();
+    SEA_ID = root["sea_id"].as<String>();
     lang = root["lang"];
     sNtpServerName = root["ntp_server"].as<String>();
 #if USE_RTC == true
@@ -154,6 +155,7 @@ bool saveConfig() {
   json["weatherHost"] = W_URL;
   json["city_code"] = CITY_ID;
   json["w_api"] = W_API;
+  json["sea_id"] = SEA_ID;
   json["lang"] = lang;
   json["ntp_server"] = sNtpServerName;
 #if USE_RTC == true
