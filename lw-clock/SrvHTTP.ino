@@ -257,7 +257,7 @@ void handle_Texts() {
   Serial.print("isTxtOn1 ");Serial.println(isTxtOn1);Serial.println(txtFrom1);Serial.println(txtTo1);Serial.println(isCrLine1);
   Serial.print("isTxtOn2 ");Serial.println(isTxtOn2);Serial.println(txtFrom2);Serial.println(txtTo2);Serial.println(isCrLine2);
   Serial.print("isTxtOn3 ");Serial.println(isTxtOn3);Serial.println(txtFrom3);Serial.println(txtTo3);Serial.println(isCrLine3);
-  HTTP.send(200, "text/plain", "OK"); // отправляем ответ о выполнении
+  HTTP.send(200, "text/plain", "OK"); 
   P.displaySuspend(false);
 }
 

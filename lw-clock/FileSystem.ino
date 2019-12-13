@@ -1,4 +1,3 @@
-// init FFS
 void FS_init(void) {
   SPIFFS.begin();  
   Dir dir = SPIFFS.openDir("/");
@@ -51,13 +50,14 @@ void FS_init(void) {
       Serial.setDebugOutput(true);
       WiFiUDP::stopAll();
       Serial.printf("Update: %s\n", upload.filename.c_str());
-      uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
-      byte cod=0;
-      if(upload.filename.indexOf("spiffs")>=0) cod=100;
-      if(!Update.begin(maxSketchSpace,cod)) {//start with max available size
+      Serial.print("Size: "); Serial.println(upload.contentLength);
+      //size_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
+      size_t content_len = upload.contentLength;
+      int cmd = (upload.filename.indexOf("spiffs") > -1) ? 100 : 0; //U_FS : U_FLASH;
+      //if(!Update.begin(maxSketchSpace,cmd)) {//start with max available size
+      if(!Update.begin(content_len,cmd)) {//start with max available size
               Update.printError(Serial);
-            }
-   
+      }
     }
     else if(upload.status == UPLOAD_FILE_WRITE) {
       if(Update.write(upload.buf, upload.currentSize) != upload.currentSize) {

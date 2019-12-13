@@ -146,5 +146,6 @@ void workAlarms() {
       onAlarm = !onAlarm;
     }
   }
-  checkStatus = 1;              
+  checkStatus = 1; 
+  //Serial.print("stopAlarm "); Serial.println(stopAlarm);Serial.print("checkStatus "); Serial.println(checkStatus);             
 }

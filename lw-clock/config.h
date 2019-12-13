@@ -1,7 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-const String nName = "LWClock";
+const String nName = "LWClock"; //"LWScreen"; // "LWClock";
 const String nVersion = "v1.0";
 #define USE_RTC true //USE RTC chip DS3231 
 #define USE_BME280 true //USE sensor BME280 (5V) http://got.by/40d52x
@@ -11,7 +11,8 @@ const String nVersion = "v1.0";
 #include <ESP8266WebServer.h> 
 #include <ESP8266HTTPClient.h>  
 #include <WiFiClientSecure.h>
-#include <ESP8266SSDP.h>        
+#include <ESP8266SSDP.h> 
+#include <Updater.h>//for update firmware and SPIFFS
 #include <FS.h>  
 #include <SPI.h>
 #include <Wire.h> // must be included here so that Arduino library object file references work              
