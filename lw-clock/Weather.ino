@@ -34,7 +34,7 @@ String GetWeather() {
     weatherString = "*" + oldWeather;
     return weatherString; 
   }
-  const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(1) + 2*JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(4) + JSON_OBJECT_SIZE(5) + JSON_OBJECT_SIZE(6) + JSON_OBJECT_SIZE(13) + 270;
+  const size_t capacity = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(1) + 2*JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(4) + JSON_OBJECT_SIZE(5) + JSON_OBJECT_SIZE(6) + JSON_OBJECT_SIZE(13) + 370;
   DynamicJsonDocument root(capacity);
   String answerWeather = ESPclient.readString();
   DeserializationError error = deserializeJson(root, answerWeather);
@@ -53,8 +53,10 @@ String GetWeather() {
   weatherString += weather_0["description"].as<String>();
   weatherString += temper[lang];
   JsonObject main = root["main"];
-  float temp = main["temp"]; 
+  float temp = main["temp"];
+  float feels_like = main["feels_like"]; 
   weatherString += String(temp,1);
+  weatherString += "/" + String(feels_like,1);
   uint8_t humidity = main["humidity"]; 
   uint16_t pressure = main["pressure"];
   weatherString += hum[lang];  weatherString += String(humidity);

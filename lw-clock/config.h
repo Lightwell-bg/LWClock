@@ -3,7 +3,7 @@
 
 const String nName = "LWClock"; //"LWScreen"; // "LWClock";
 const String nVersion = "v1.0";
-#define USE_RTC true //USE RTC chip DS3231 
+#define USE_RTC false //USE RTC chip DS3231 
 #define USE_BME280 true //USE sensor BME280 (5V) http://got.by/40d52x
 #define USE_DHT false //USE sensor DHT
 #define MAX_DEVICES 4  //Number of indicator modules MAX7219
