@@ -22,6 +22,8 @@ const String nVersion = "v1.0";
 #include <MD_MAX72xx.h>         //https://github.com/MajicDesigns/MD_MAX72XX
 #include <MD_MAXPanel.h>        //https://github.com/MajicDesigns/MD_MAXPanel
 #include <PubSubClient.h> //"https://github.com/knolleary/pubsubclient.git"
+#include "NetCrtESP.h" //https://github.com/Lightwell-bg/NetCrtESP
+//#include "ESPTimeFunc.h" //https://github.com/Lightwell-bg/ESPTimeFunc
 #if USE_RTC == true
   #include "RTClib.h" //https://github.com/adafruit/RTClib
   RTC_DS3231 rtc;
@@ -51,9 +53,7 @@ const String nVersion = "v1.0";
 
 ESP8266WebServer HTTP; 
 File fsUploadFile; 
-IPAddress apIP(192, 168, 4, 1); //IP addres for AP Wi-Fi
-unsigned int localPort = 8888;  
-WiFiUDP Udp;
+NetCrtESP myWIFI;
 WiFiClient ESPclient;
 PubSubClient mqttClient(ESPclient);
 
@@ -137,6 +137,7 @@ String password = "";
 String ssidAP = "LWClock";   // SSID AP 
 String passwordAP = ""; // AP password
 String SSDP_Name = "LWClock"; // SSDP name
+String apIP = "192.168.4.1";
 
 
 String jsonConfig = "{}";

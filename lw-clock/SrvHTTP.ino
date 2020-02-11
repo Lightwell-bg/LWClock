@@ -37,18 +37,13 @@ void handle_ConfigJSON() {
       return;
   }     
   JsonObject json = jsonDoc.as<JsonObject>();    
-  json["SSDP"] = SSDP_Name;
-  json["ssidAP"] = ssidAP;
-  json["passwordAP"] = passwordAP;
-  json["ssid"] = ssid;
-  json["password"] = password;
+  json["SSDP"] = myWIFI.getNameSSDP();
+  json["ssidAP"] = myWIFI.getNameAPSSID();
+  json["passwordAP"] = myWIFI.getPassAPSSID();
+  json["ssid"] = myWIFI.getNameSSID();
+  json["password"] = myWIFI.getPassSSID();
+  json["ip"] = myWIFI.getDevStatusIP();
   json["timezone"] = timezone;
-  if (WiFi.status() != WL_CONNECTED)  {
-    json["ip"] = WiFi.softAPIP().toString(); 
-  }
-  else {
-    json["ip"] = WiFi.localIP().toString();
-  }
   json["time"] = GetTime(true);
   json["date"] = GetDate();
   json["date_day"] = day(tn);
@@ -141,7 +136,8 @@ void handle_Set_Ssid() {
   ssidAP = HTTP.arg("ssidAP").c_str();        
   passwordAP = HTTP.arg("passwordAP").c_str(); 
   SSDP_Name = HTTP.arg("ssdp").c_str();
-  saveConfig();                        
+  myWIFI.setConfigWIFI(ssid.c_str(), password.c_str(), SSDP_Name.c_str(), ssidAP.c_str(), passwordAP.c_str()); 
+  //saveConfig();                        
   Serial.println("Set SSID: " + ssid + ", Set password: " + password + ", Set SSID AP: " + ssidAP + ", Set AP password: " + passwordAP + ", SSDP: " + SSDP_Name);
   HTTP.send(200, "text/plain", "OK");   
 }

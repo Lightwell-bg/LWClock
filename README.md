@@ -107,6 +107,7 @@ The following packages and libraries are used (download and install):
 - Adafruit Unified Sensor by Adafruit (version 1.0.3) (for DHT sensor only)
 - DHT sensor library by Adafruit (version 1.3.8) (for DHT sensor only)
 - BlueDot BME280 Library by BlueDot (version 1.0.9)
+- NetCrtESP (version 1.0) https://github.com/Lightwell-bg/NetCrtESP
 
 Note: There could be some Issues if using different versions of the libraries.
 

@@ -23,13 +23,8 @@ bool loadConfig() {
       return false;
    }   
    JsonObject root = jsonDoc.as<JsonObject>();    
-    ssidAP = root["ssidAPName"].as<String>(); // Так получаем строку
-    passwordAP = root["ssidAPPassword"].as<String>();
     timezone = root["timezone"];               // Так получаем число
     isDayLightSaving = root["isDayLightSaving"];
-    SSDP_Name = root["SSDPName"].as<String>();
-    ssid = root["ssidName"].as<String>();
-    password = root["ssidPassword"].as<String>();
     weathFrom = root["weathFrom"]; weathTo = root["weathTo"];
     fcastFrom = root["fcastFrom"]; fcastTo = root["fcastTo"];
     clockFrom = root["clockFrom"]; clockTo = root["clockTo"];
@@ -110,11 +105,6 @@ bool saveConfig() {
       return false;
   }     
   JsonObject json = jsonDoc.as<JsonObject>();  
-  json["SSDPName"] = SSDP_Name;
-  json["ssidAPName"] = ssidAP;
-  json["ssidAPPassword"] = passwordAP;
-  json["ssidName"] = ssid;
-  json["ssidPassword"] = password;
   json["timezone"] = timezone;
   json["isDayLightSaving"] = isDayLightSaving;
   json["weathFrom"] = weathFrom; json["weathTo"] = weathTo;
