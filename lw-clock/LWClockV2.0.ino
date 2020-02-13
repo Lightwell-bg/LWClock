@@ -264,7 +264,7 @@ void loop() {
           #endif   
           #if USE_BME280 == true
             //strTHP = onboard[lang] + getTempBME280() + hum[lang] + getHumBME280() + pres[lang] + getPressBME280() + "mm";
-            tempUP = getTempBME280()+"\xC3"; humUp = getHumBME280()+"%"; pressUP = getPressBME280()+"\xC4";
+            tempUP = getTempBME280(dataCorrect, 1)+"\xC3"; humUp = getHumBME280(dataCorrect, 0)+"%"; pressUP = getPressBME280(0)+"\xC4";
           #endif  
           Serial.println(strTHP);
           lastTimePHT = millis();

@@ -68,7 +68,9 @@ bool loadConfig() {
     sNtpServerName = root["ntp_server"].as<String>();
 #if USE_RTC == true
     useRTC = root["useRTC"];
-#endif   
+#endif  
+    dataCorrect = root["dataCorrect"];
+    hpa = root["hpa"];
     mqttOn = root["mqttOn"];
     mqtt_server = root["mqtt_server"].as<String>();
     mqtt_port = root["mqtt_port"].as<int>();
@@ -151,6 +153,8 @@ bool saveConfig() {
 #if USE_RTC == true
   json["useRTC"] = useRTC;
 #endif  
+  json["dataCorrect"] = dataCorrect;
+  json["hpa"] = hpa;
   json["mqttOn"] = mqttOn;
   json["mqtt_server"] = mqtt_server;
   json["mqtt_port"] = mqtt_port;

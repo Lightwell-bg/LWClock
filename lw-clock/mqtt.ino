@@ -57,11 +57,11 @@ boolean reconnect() {
     mqttClient.publish(mqtt_pub_hum.c_str(), mqttData, true); // 
 #endif //DHT
 #if USE_BME280 == true
-    String tempBME = String(bme280.readTempC()); 
-    String humBME = String(bme280.readHumidity());
-    String pressBME = String(bme280.readPressure());
+    String tempBME = getTempBME280(dataCorrect, 2); 
+    String humBME = getHumBME280(dataCorrect, 2);
+    String pressBME = getPressBME280(hpa, 2);
     Serial.print("Temperature: "); Serial.print(tempBME); Serial.print("°C"); Serial.print(". Humidity: "); Serial.print(humBME); Serial.print("%");
-    Serial.print(". Pressure: ");Serial.print(pressBME); Serial.println("hPa");
+    Serial.print(". Pressure: ");Serial.print(pressBME); Serial.println((hpa ? " hPa" : " mm"));
     tempBME.toCharArray(mqttData, (tempBME.length()+1));
     mqttClient.publish(mqtt_pub_temp.c_str(), mqttData, true); //  
     humBME.toCharArray(mqttData, (humBME.length()+1));

@@ -106,7 +106,9 @@ var langEN = {
     P_help_wait:"Wait...",
     restart:"Back to factory settings",
     //-- mqtt
-    P_mqtt_title:"Configure MQTT",
+	P_sensor_Correct:"Adjust temperature and humidity depending on the brightness of the indicator",
+	P_sensor_unit:"Pressure unit for transmit to MQTT and external server",
+    P_mqtt_title:"Configure sensor",
 	P_mqtt_informer:"Configure the MQTT server. You can use an external server, for example: ",
     P_mqtt_mqttOn:"Use MQTT server",
 	P_mqtt_set:"Connection to MQTT server:",

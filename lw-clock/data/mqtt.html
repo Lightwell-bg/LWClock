@@ -29,6 +29,11 @@
 				//load();
 				alert("Ok");
             }	
+			function set_sensor(submit) {
+                server = "/sensorSet?dataCorrect=" + val_sw('dataCorrect') + "&hpa=" + val('hpa');
+                send_request(submit,server);
+				alert("Ok");
+            }
             function set_tspeak_ust(submit) {
                 server = "/tspeakSet?tspeakOn=" + val_sw('tspeakOn') + "&tspeak_server=" + val('tspeak_server');
                 server += "&tspeak_channal=" + val('tspeak_channal') + "&tspeak_wapi=" + val('tspeak_wapi');
@@ -55,17 +60,33 @@
                 <a class="link__img" href="/wifi.html"><span class="ico__text">Wifi</span></a>
                 <a class="link__img" href="/time.html"><span class="ico__text">Time</span></a>
                 <a class="link__img" href="/setup.html"><span class="ico__text">Setup</span></a>
+				<a class="link__img" href="/mqtt.html"><span class="ico__text">Sensor</span></a>
                 <a class="link__img" href="/help.html"><span class="ico__text">Help</span></a>
                 <a class="link__img" href="#"><span class="ico__text" onclick="restart(this,'ResetESP?');">Restart</span></a>
             </div>
             <titles>
                 <span class="opt_cn" id="P_mqtt_title"></span>
             </titles>
+            <div id="main_unit">
+			<label class="switch">
+                <span class="opt_cn" id="P_sensor_Correct"></span><br>
+                <input type="checkbox" class="checkbox" id="dataCorrect" name="switch-btn">
+                <span class="switch-btn"></span>
+            </label>
+			<br>
+			<span class="opt_cn" id="P_sensor_unit"></span><br>
+			<select id = "hpa">
+				<option value="0">mm</option>
+				<option value="1">hPa</option>
+			</select>
+			<br>		
+			<span class="save_booton" id="save2" onclick="set_sensor(this);"></span><br>
+
+			
             <div class="informer">
                 <span class="opt_cn" id="P_mqtt_informer"></span>
                 <a href="https://www.cloudmqtt.com" align="center" target="_blank"> cloudmqtt.com</a>
             </div>            
-            <div id="main_unit">
                 <hr>
                 <label class="switch">
                     <span class="opt_cn" id="P_mqtt_mqttOn"></span>

@@ -14,6 +14,7 @@ void server_httpinit(void) {
   HTTP.on("/sea", handle_Sea);  
   HTTP.on("/weatherUpdate", handle_weather_update);
   HTTP.on("/lang", handle_Language);
+  HTTP.on("/sensorSet", handle_sensorSet);
   HTTP.on("/mqttSet", handle_MQTTSet);
   HTTP.on("/mqttOn", handle_MQTTOn);
   HTTP.on("/tspeakSet", handle_tspeakSet);
@@ -92,7 +93,9 @@ void handle_ConfigJSON() {
   json["city_code"] = CITY_ID;
   json["w_api"] = W_API; 
   json["sea_id"] = SEA_ID;
-  json["ntpserver"] = sNtpServerName;  
+  json["ntpserver"] = sNtpServerName; 
+  json["dataCorrect"]=(dataCorrect?"checked":"");
+  json["hpa"]=(hpa?"1":"0");
   json["mqttOn"]=(mqttOn?"checked":"");
   json["mqtt_server"] = mqtt_server;
   json["mqtt_port"] = mqtt_port;
@@ -108,8 +111,8 @@ void handle_ConfigJSON() {
   json["hum_now"] = getHumDHT()+ "%";
 #endif
 #if USE_BME280 == true
-  json["temp_now"] = getTempBME280();
-  json["hum_now"] = getHumBME280() + "%  Press " + getPressBME280() + "mm";
+  json["temp_now"] = getTempBME280(dataCorrect, 2);
+  json["hum_now"] = getHumBME280(dataCorrect, 2) + "%  Press " + getPressBME280(hpa, 2) + (hpa ? " hPa" : " mm");
 #endif  
   json["isLedTHP"]=(isLedTHP?"checked":"");
   json["thpFrom"] = thpFrom; json["thpTo"] = thpTo;
@@ -315,6 +318,14 @@ void handle_MQTTOn() {
     HTTP.send(200, "text/plain", "OK");   
 }
 
+void handle_sensorSet() {
+    HTTP.arg("dataCorrect").toInt()==1?dataCorrect=true:dataCorrect=false;
+    HTTP.arg("hpa").toInt()==1?hpa=true:hpa=false;
+    saveConfig();                 
+    Serial.println("dataCorrect: " + String(dataCorrect) + ", hpa: " + String(hpa));
+    HTTP.send(200, "text/plain", "OK"); 
+}
+
 void handle_MQTTSet() {
     HTTP.arg("mqttOn").toInt()==1?mqttOn=true:mqttOn=false;
     mqtt_server = HTTP.arg("mqtt_server").c_str();
@@ -354,7 +365,8 @@ void handle_Sensors() {
   #endif   
   #if USE_BME280 == true
     strTHP = onboard[lang] + getTempBME280() + hum[lang] + getHumBME280() + pres[lang] + getPressBME280() + "mm";
-  #endif  
+  #endif
+  lastTimePHT = 0;//for update display  
   Serial.println(strTHP);
   lastTimePHT = millis();    
   HTTP.send(200, "text/plain", "OK");     

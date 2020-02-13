@@ -223,6 +223,10 @@ sAlarmSet myAlarm[] = {{6,30,0},{7,30,0}};
 bool stopAlarm = false; //Alarm of flag (Флаг кнопки выкл. ALARM)
 unsigned long timeStopAlarm = 0; //Отсчет времени активности кнопки (1 мин)  
 
+//sensor
+bool dataCorrect = false; //use correction for temp and hum depending brightness 
+bool hpa = false; //Pressure hPa or mm for MQTT
+
 //mqtt
 bool mqttOn = false;
 char mqttData[80]; //array for send to  MQTT
@@ -274,7 +278,7 @@ void sendMQTT();
 void sendTspeak();
 String getTempDHT();
 String getHumDHT();
-String getTempBME280();
-String getHumBME280();
-String getPressBME280();
+String getTempBME280(bool correct = false, uint8_t pr = 1);
+String getHumBME280(bool correct = false, uint8_t pr = 0);
+String getPressBME280(bool hpa = false, uint8_t pr = 0);
 #endif
