@@ -1,9 +1,9 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-const String nName = "LWClock"; //"LWScreen"; // "LWClock";
-const String nVersion = "v1.0";
-#define USE_RTC false //USE RTC chip DS3231 
+const String nName = "LWScreen_"; //"LWClock_"; 
+const String nVersion = "v2.1";
+#define USE_RTC true //USE RTC chip DS3231 
 #define USE_BME280 true //USE sensor BME280 (5V) http://got.by/40d52x
 #define USE_DHT false //USE sensor DHT
 #define MAX_DEVICES 4  //Number of indicator modules MAX7219
@@ -18,6 +18,7 @@ const String nVersion = "v1.0";
 #include <Wire.h> // must be included here so that Arduino library object file references work              
 #include <ArduinoJson.h>        //https://github.com/bblanchon/ArduinoJson.git
 #include <TimeLib.h>            //https://github.com/PaulStoffregen/Time Michael Margolis
+#include <Timezone.h>           //https://github.com/JChristensen/Timezone
 #include <MD_Parola.h>          //https://github.com/MajicDesigns/MD_Parola
 #include <MD_MAX72xx.h>         //https://github.com/MajicDesigns/MD_MAX72XX
 #include <MD_MAXPanel.h>        //https://github.com/MajicDesigns/MD_MAXPanel
@@ -151,6 +152,11 @@ bool statusUpdateNtpTime = 1; //
 const unsigned long TIME_UPDATE = 1000*60*10; //Time update interval
 const unsigned long NTP_UPDATE = 1000*30; //Интервал обновления с NTP при отсутствии ответа сервера
 unsigned long lastNtpTime = 0;
+// Central European Time (Frankfurt, Paris)
+TimeChangeRule CEST = {"CEST", Last, Sun, Mar, 2, 120};     // Central European Summer Time
+TimeChangeRule CET = {"CET ", Last, Sun, Oct, 3, 60};       // Central European Standard Time
+Timezone CE(CEST, CET);
+TimeChangeRule *tcr;
 
 //Display TEXT
 uint32_t  displayClockCount = 0; //counter for time of display CLOCK

@@ -10,7 +10,8 @@ time_t getNtpTime() {
   unsigned long summerOffset = 0;
   if (WiFi.status() == WL_CONNECTED) {
       summerOffset = isDayLightSaving ? daylightOffset_sec : 0;
-      configTime(timezone*SECS_PER_HOUR, summerOffset, sNtpServerName.c_str(), sNtpServerName2.c_str(), sNtpServerName3.c_str()); // enable NTP
+      //configTime(timezone*SECS_PER_HOUR, summerOffset, sNtpServerName.c_str(), sNtpServerName2.c_str(), sNtpServerName3.c_str()); // enable NTP
+      configTime(0, 0, sNtpServerName.c_str(), sNtpServerName2.c_str(), sNtpServerName3.c_str()); // enable NTP
       Serial.println("\nWaiting for time");
       t = time(NULL);
       timeinfo = localtime(&t);
@@ -25,8 +26,14 @@ time_t getNtpTime() {
       }
       if (timeinfo->tm_year > (2017 - 1900)) {
         Serial.println("Time NTP ready.");
-        Serial.print("timeinfo: "); Serial.printf("%02d:%02d", timeinfo->tm_hour, timeinfo->tm_min); Serial.println();
-        return t;             
+        Serial.print("timeinfo UTC: "); Serial.printf("%02d:%02d", timeinfo->tm_hour, timeinfo->tm_min); Serial.println();
+        TimeChangeRule localCEST = {"CEST", Last, Sun, Mar, 2, 60*timezone+summerOffset};     // LOCAL Summer Time
+        TimeChangeRule localCET = {"CET ", Last, Sun, Oct, 3, 60*timezone};       // LOCAL Standard Time
+        Timezone localCE(localCEST, localCET);
+        //TimeChangeRule *tcr; //need only for diff rules
+        //return t; 
+        //return localCE.toLocal(t, &tcr); //Serial.println(tcr -> abbrev);
+        return localCE.toLocal(t); //Serial.println(tcr -> abbrev);           
       }
       else return 0;
   }
