@@ -9,7 +9,7 @@ time_t getNtpTime() {
   struct tm *timeinfo;
   unsigned long summerOffset = 0;
   if (WiFi.status() == WL_CONNECTED) {
-      summerOffset = isDayLightSaving ? daylightOffset_sec : 0;
+      summerOffset = isDayLightSaving ? daylightOffset_sec/60 : 0;
       //configTime(timezone*SECS_PER_HOUR, summerOffset, sNtpServerName.c_str(), sNtpServerName2.c_str(), sNtpServerName3.c_str()); // enable NTP
       configTime(0, 0, sNtpServerName.c_str(), sNtpServerName2.c_str(), sNtpServerName3.c_str()); // enable NTP
       Serial.println("\nWaiting for time");
