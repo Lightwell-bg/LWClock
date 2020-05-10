@@ -1,7 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-const String nName = "LWScreen_"; //"LWClock_"; 
+const String nName = "LWClock_"; //"LWScreen_"; "LWClock_"; 
 const String nVersion = "v2.1";
 #define USE_RTC true //USE RTC chip DS3231 
 #define USE_BME280 true //USE sensor BME280 (5V) http://got.by/40d52x
@@ -133,7 +133,7 @@ const char* month_en[] PROGMEM = {"January", "February", "March", "April", "May"
 const char** month_table[] PROGMEM = {month_ru, month_bg, month_en};
 
 // Wi-Fi setting
-String ssid = "ledlw";
+String ssid = "hlanbg2.4";
 String password = "";
 String ssidAP = "LWClock";   // SSID AP 
 String passwordAP = ""; // AP password

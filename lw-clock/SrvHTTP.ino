@@ -9,7 +9,9 @@ void server_httpinit(void) {
 #endif 
   HTTP.on("/ledsetup", handle_LedSetup); //speed, brightness, 
   HTTP.on("/texts", handle_Texts);     // Set stext
+  HTTP.on("/textsAndr", handle_TextsAndr);  //For request from smartphone
   HTTP.on("/ledoption", handle_LedOption);
+  HTTP.on("/ledoptionAndr", handle_LedOptionAndr); //For request from smartphone
   HTTP.on("/weather", handle_Weather);
   HTTP.on("/sea", handle_Sea);  
   HTTP.on("/weatherUpdate", handle_weather_update);
@@ -20,6 +22,10 @@ void server_httpinit(void) {
   HTTP.on("/tspeakSet", handle_tspeakSet);
   HTTP.on("/tspeakOn", handle_tspeakOn); 
   HTTP.on("/setalarm", handle_set_alarm);
+  HTTP.on("/setalarm1TimeAndr", handle_set_alarm1AndrTime); //For request from smartphone
+  HTTP.on("/setalarm1AllAndr", handle_set_alarm1AndrAll); //For request from smartphone
+  HTTP.on("/setalarm2TimeAndr", handle_set_alarm2AndrTime); //For request from smartphone
+  HTTP.on("/setalarm2AllAndr", handle_set_alarm2AndrAll); //For request from smartphone
   HTTP.on("/Sensor", handle_Sensors);
   HTTP.on("/restart", handle_Restart);   // reset ESP
   HTTP.on("/resetConfig", handle_resetConfig);      
@@ -219,11 +225,32 @@ void handle_LedOption() {
 #else
   isLedTHP=false; thpFrom = 25; thpTo = 25;
 #endif
-  saveConfig();                 
+  saveConfig();
+  HTTP.send(200, "text/plain", "OK");                 
   (isLedWeather?strWeather = GetWeather():strWeather ="");
   (isLedForecast?strWeatherFcast = GetWeatherForecast():strWeatherFcast = "");
   (isLedSea?strSea = GetSea():strSea ="");
-  HTTP.send(200, "text/plain", "OK"); 
+}
+
+void handle_LedOptionAndr() { //For request from smartphone
+  global_start = HTTP.arg("global_start").toFloat();
+  global_stop = HTTP.arg("global_stop").toFloat();
+  HTTP.arg("isLedWeather").toInt()==1?isLedWeather=true:isLedWeather=false;
+  HTTP.arg("isLedForecast").toInt()==1?isLedForecast=true:isLedForecast=false;
+  HTTP.arg("isLedClock").toInt()==1?isLedClock=true:isLedClock=false;
+  HTTP.arg("isLedDate").toInt()==1?isLedDate=true:isLedDate=false;
+  HTTP.arg("isLedSea").toInt()==1?isLedSea=true:isLedSea=false;
+#if (USE_BME280 == true || USE_DHT == true)  
+  HTTP.arg("isLedTHP").toInt()==1?isLedTHP=true:isLedTHP=false;
+  thpFrom = 0; thpTo = 24;
+#else
+  isLedTHP=false; thpFrom = 25; thpTo = 25;
+#endif
+  saveConfig(); 
+  HTTP.send(200, "text/plain", "OK");                
+  (isLedWeather?strWeather = GetWeather():strWeather ="");
+  (isLedForecast?strWeatherFcast = GetWeatherForecast():strWeatherFcast = "");
+  (isLedSea?strSea = GetSea():strSea ="");
 }
 
 void handle_Texts() {
@@ -250,7 +277,31 @@ void handle_Texts() {
   HTTP.arg("isCrLine3").toInt()==1?isCrLine3=true:isCrLine3=false;
   global_start = HTTP.arg("global_start").toFloat();
   global_stop = HTTP.arg("global_stop").toFloat();
-  saveConfig();                 // Функция сохранения данных во Flash
+  saveConfig();                 
+  Serial.print("strText ");Serial.println(strText0);Serial.println(strText1);Serial.println(strText2);Serial.println(strText3);
+  Serial.print("isTxtOn0 ");Serial.println(isTxtOn0);Serial.println(txtFrom0);Serial.println(txtTo0);Serial.println(isCrLine0);
+  Serial.print("isTxtOn1 ");Serial.println(isTxtOn1);Serial.println(txtFrom1);Serial.println(txtTo1);Serial.println(isCrLine1);
+  Serial.print("isTxtOn2 ");Serial.println(isTxtOn2);Serial.println(txtFrom2);Serial.println(txtTo2);Serial.println(isCrLine2);
+  Serial.print("isTxtOn3 ");Serial.println(isTxtOn3);Serial.println(txtFrom3);Serial.println(txtTo3);Serial.println(isCrLine3);
+  HTTP.send(200, "text/plain", "OK"); 
+  P.displaySuspend(false);
+}
+
+void handle_TextsAndr() {//For request from smartphone
+  P.displaySuspend(true);
+  strText0 = HTTP.arg("ledText0").c_str(); // 
+  strText1 = HTTP.arg("ledText1").c_str(); // 
+  strText2 = HTTP.arg("ledText2").c_str(); // 
+  strText3 = HTTP.arg("ledText3").c_str(); //
+  HTTP.arg("isTxtOn0").toInt()==1?isTxtOn0=true:isTxtOn0=false;
+  HTTP.arg("isTxtOn1").toInt()==1?isTxtOn1=true:isTxtOn1=false;
+  HTTP.arg("isTxtOn2").toInt()==1?isTxtOn2=true:isTxtOn2=false;
+  HTTP.arg("isTxtOn3").toInt()==1?isTxtOn3=true:isTxtOn3=false;
+  HTTP.arg("isCrLine0").toInt()==1?isCrLine0=true:isCrLine0=false;
+  HTTP.arg("isCrLine1").toInt()==1?isCrLine1=true:isCrLine1=false;
+  HTTP.arg("isCrLine2").toInt()==1?isCrLine2=true:isCrLine2=false;
+  HTTP.arg("isCrLine3").toInt()==1?isCrLine3=true:isCrLine3=false;
+  saveConfig();                 
   Serial.print("strText ");Serial.println(strText0);Serial.println(strText1);Serial.println(strText2);Serial.println(strText3);
   Serial.print("isTxtOn0 ");Serial.println(isTxtOn0);Serial.println(txtFrom0);Serial.println(txtTo0);Serial.println(isCrLine0);
   Serial.print("isTxtOn1 ");Serial.println(isTxtOn1);Serial.println(txtFrom1);Serial.println(txtTo1);Serial.println(isCrLine1);
@@ -382,6 +433,40 @@ void handle_set_alarm(){
   saveConfig();
   //Serial.println("alarm1_h: " + alarm[0].alarm_h + ", alarm1_m: " + alarm[0].alarm_m + ", alarm1_stat: " + alarm[0].alarm_stat);
   //Serial.println("alarm2_h: " + alarm[1].alarm_h + ", alarm2_m: " + alarm[1].alarm_m + ", alarm2_stat: " + alarm[1].alarm_stat);
+  HTTP.send(200, "text/plain", "OK"); 
+}  
+
+void handle_set_alarm1AndrTime(){ //For Android
+  myAlarm[0].alarm_h = HTTP.arg("alarm1_h").toInt();
+  myAlarm[0].alarm_m = HTTP.arg("alarm1_m").toInt(); 
+  saveConfig();
+  Serial.println("alarm1_h: " + String(myAlarm[0].alarm_h) + ", alarm1_m: " + String(myAlarm[0].alarm_m));
+  HTTP.send(200, "text/plain", "OK"); 
+}  
+
+void handle_set_alarm1AndrAll(){ //For Android
+  myAlarm[0].alarm_h = HTTP.arg("alarm1_h").toInt();
+  myAlarm[0].alarm_m = HTTP.arg("alarm1_m").toInt(); 
+  myAlarm[0].alarm_stat = HTTP.arg("alarm1_stat").toInt();  
+  saveConfig();
+  Serial.println("alarm1_h: " + String(myAlarm[0].alarm_h) + ", alarm1_m: " + String(myAlarm[0].alarm_m) + ", alarm1_stat: " + String(myAlarm[0].alarm_stat));
+  HTTP.send(200, "text/plain", "OK"); 
+}  
+
+void handle_set_alarm2AndrTime(){ //For Android
+  myAlarm[1].alarm_h = HTTP.arg("alarm2_h").toInt();
+  myAlarm[1].alarm_m = HTTP.arg("alarm2_m").toInt(); 
+  saveConfig();
+  Serial.println("alarm2_h: " + String(myAlarm[1].alarm_h) + ", alarm1_m: " + String(myAlarm[1].alarm_m));
+  HTTP.send(200, "text/plain", "OK"); 
+}  
+
+void handle_set_alarm2AndrAll(){ //For Android
+  myAlarm[1].alarm_h = HTTP.arg("alarm2_h").toInt();
+  myAlarm[1].alarm_m = HTTP.arg("alarm2_m").toInt(); 
+  myAlarm[1].alarm_stat = HTTP.arg("alarm2_stat").toInt();  
+  saveConfig();
+  Serial.println("alarm2_h: " + String(myAlarm[1].alarm_h) + ", alarm1_m: " + String(myAlarm[1].alarm_m) + ", alarm1_stat: " + String(myAlarm[1].alarm_stat));
   HTTP.send(200, "text/plain", "OK"); 
 }  
 

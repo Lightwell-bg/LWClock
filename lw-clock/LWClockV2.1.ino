@@ -259,7 +259,7 @@ void loop() {
       if (isLedTHP&& compTimeInt(thpFrom, thpTo, nowtime)) {
         if (millis() - lastTimePHT > PER_GET_THP) { //чтобы не грузить
           #if USE_DHT == true 
-            strTHP = onboard[lang] + getTempDHT() + hum[lang] + getHumDHT() + "%";
+            //strTHP = onboard[lang] + getTempDHT() + hum[lang] + getHumDHT() + "%";
             tempUP = getTempDHT()+"\xC3"; humUp = getHumDHT()+"%";
           #endif   
           #if USE_BME280 == true
@@ -270,11 +270,11 @@ void loop() {
           lastTimePHT = millis();
         } 
         #if USE_DHT == true 
-        if (modeShowUP > 4) modeShowUP = 1;
-        if (modeShowUP==1) modeShowUP +=showTextUP(temperIn[lang], 5*speedTicker, 500, PA_SCROLL_UP, PA_SCROLL_UP, false); 
-        if (modeShowUP==2) modeShowUP +=showTextUP(tempUP, 5*speedTicker, 1750, PA_SCROLL_UP, PA_SCROLL_UP_LEFT, false); 
-        if (modeShowUP==3) modeShowUP +=showTextUP(humIn[lang], 5*speedTicker, 500, PA_SCROLL_UP, PA_SCROLL_UP, false);
-        if (modeShowUP==4) modeShowUP +=showTextUP(humUp, 5*speedTicker, 1750, PA_SCROLL_UP, PA_SCROLL_UP_RIGHT, true);         
+        if (modeShowUP > 2) modeShowUP = 1;
+        //if (modeShowUP==1) modeShowUP +=showTextUP(temperIn[lang], 5*speedTicker, 500, PA_SCROLL_UP, PA_SCROLL_UP, false); 
+        if (modeShowUP==1) modeShowUP +=showTextUP(tempUP, 5*speedTicker, 1750, PA_SCROLL_UP, PA_SCROLL_UP_LEFT, false); 
+        //if (modeShowUP==3) modeShowUP +=showTextUP(humIn[lang], 5*speedTicker, 500, PA_SCROLL_UP, PA_SCROLL_UP, false);
+        if (modeShowUP==2) modeShowUP +=showTextUP(humUp, 5*speedTicker, 1750, PA_SCROLL_UP, PA_SCROLL_UP_RIGHT, true);         
         //showText(strTHP, PA_LEFT, 5*speedTicker, 0, PA_SCROLL_LEFT, PA_SCROLL_LEFT);
         #endif 
         #if USE_BME280 == true 
