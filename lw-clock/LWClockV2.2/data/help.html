@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <meta http-equiv = "Content-type" content = "text/html; charset=utf-8">
+        <title>Led screen ver:2.0</title>
+        <link rel="icon" href="./img/favicon.png" type="images/png">
+        <link rel = "stylesheet" type = "text/css" href = "/style.css">
+        <script type = "text/javascript" src = "/function.js"></script>
+        <script type = "text/javascript" src = "/lang_RU.js"></script>
+        <script type = "text/javascript" src = "/lang_BG.js"></script>
+        <script type = "text/javascript" src = "/lang_EN.js"></script>
+        <script type = "text/javascript">
+            function resetConfig(submit,texts) {
+                if(confirm(texts)) {
+                    server = "/resetConfig?device=ok";
+                    send_request(submit, server);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        </script>
+    </head>
+    <body onload = "load();">
+        <header>
+            <span class="opt_cn" id="header"></span><br>
+            <span class="opt_cn" id="P_time_informer"></span>
+            <span id="time">{{time}}</span><br>
+			<span id="ver">{{cVersion}}</span>	
+        </header>       
+        <central-unit>         
+            <div class="menu_unit">
+                <a class="link__img" href="/index.html"><span class="ico__text">Screen</span></a>			
+                <a class="link__img" href="/wifi.html"><span class="ico__text">Wifi</span></a>
+                <a class="link__img" href="/time.html"><span class="ico__text">Time</span></a>
+                <a class="link__img" href="/setup.html"><span class="ico__text">Setup</span></a>
+                <a class="link__img" href="/help.html"><span class="ico__text">Help</span></a>
+				<a class="link__img" href="#"><span class="ico__text" onclick="restart(this,'ResetESP?');">Restart</span></a>
+                <!--<a class="link__img" href="#"><span class="ico__text" onclick="resetConfig(this,'Factory reset?');">Reset</span></a>-->
+            </div>
+            <titles><span class="opt_cn" id="P_help_title"></span></titles>
+            <div class="informer"><span class="opt_cn" id="P_help_informer1"></span>
+            </div>            
+            <div id="main_unit">
+                <div class="informer">
+                    <span class="opt_cn" id="P_help_informer2"></span>
+                </div>  
+				<strong><a class="link__img" href="#"><span class="ico__text" onclick="resetConfig(this,'Factory reset?');"><font color="red">!!! RESET !!!</font></span></strong><br>
+                <strong><a class = "btn btn-block btn-default" href = "/myconfig.json" id="P_help_conf" target="_blank"></a></strong><br>
+				<strong><a class = "btn btn-block btn-default" href = "/edit" id="P_help_html" target="_blank"></a></strong><br>
+            </div>
+            <hr>
+            <center>
+                <div>
+                    <b><span class="opt_cn" id="P_help_update"></span></b>
+                    <form method="POST" action="/update" enctype="multipart/form-data">
+                        <div>
+                            <input type="file"  name="update" style="height: 33px;">
+                            <input type="submit" class="save_booton" id="P_help_upload" onclick="this.value='Please wait...';">
+                        </div>
+                    </form>
+                </div>
+            </center>
+            <div class="menu_unit" id="langs">
+                <a><span class="ico__text" onclick="set_lang_f(this, 'EN');">EN</span></a>			
+                <a><span class="ico__text" onclick="set_lang_f(this, 'RU');">RU</span></a>
+                <a><span class="ico__text" onclick="set_lang_f(this, 'BG');">BG</span></a>
+            </div>
+        </central-unit>
+    </body>
+</html>
